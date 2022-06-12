@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ url_for('static',  filename='favicon.ico') }}">
+    <meta name="description" content="這個網站是用來辨識真人、假人"/> <!-- 描述 -->
+    <meta name="author" content="chiang yu hung"/> <!-- 作者 -->
+    <meta name="keywords" content="辨識,數字,人臉,face"/><!-- 搜尋用關鍵字 -->
+    <meta name="viewport" content="width=device-width, initial-sacle=1.0"/> <!-- 手機電腦比例轉換 -->
+    <title>臉部辨識的網站</title>
+  </head>
+  <body>
+    <h1 style='text-align:center'>Fake-Vs-Real-Faces</h1> <!-- 標題用h1~6 1最大 6最小 -->
+        <h2>資料來源</h2>
+        <lu> <!-- 標點 羅馬字 數字 英文 -->
+            <li><a href="https://www.kaggle.com/datasets/hamzaboulahia/hardfakevsrealfaces">kaggle</a></li>
+            <br/> <!--換行-->
+            <li><a href="https://unsplash.com/">Real face</a></li>
+            <br/>
+            <li><a href="https://thispersondoesnotexist.com/">Fake face</a></li>
+        </lu>
+        <h2>圖片範例</h2>
+        <p>以下真假圖片各有4張 請將滑鼠移至圖片來觀看答案</p> <!--文字-->
+        <table width="100%" style='text-align:center'><!--表格-->
+            <tr ><!--列-->
+                <td><img style=" border: 1px solid black" id="img1" src="static/real1.jpg" alt='image' width=200px/></td><!--列的第一個行-->
+                <td><img style=" border: 1px solid black" id="img7"  src="static/fake3.jpg" alt='image' width=200px/></td>
+                <td><img style=" border: 1px solid black" id="img6"  src="static/fake2.jpg" alt='image' width=200px/></td>
+                <td><img style=" border: 1px solid black" id="img4" src="static/real4.jpg" alt='image' width=200px/></td>
+            </tr>
+            <br/>
+            <tr>
+                <td><img style=" border: 1px solid black" id="img5"  src="static/fake1.jpg" alt='image' width=200px/></td>                
+                <td><img style=" border: 1px solid black" id="img2" src="static/real2.jpg" alt='image' width=200px/></td>
+                <td><img style=" border: 1px solid black" id="img8"  src="static/fake4.jpg" alt='image' width=200px/></td>
+                <td><img style=" border: 1px solid black" id="img3" src="static/real3.jpg" alt='image' width=200px/></td>
+            </tr>
+        </table>
+        <h2>實際操作</h2>
+        <form method="POST" enctype="multipart/form-data"  action="{{ url_for('upload_file') }}">
+            <input id='file' type="file" name="filename"  targetID="preview_progressbarTW_img" data-target='preview_photo'accept="image/*" onchange="readURL(this)" required>
+            <img id="preview_progressbarTW_img" src="#" width="300px"/> 
+            <input type="submit" value="上傳">
+        </form>
+        <script>
+                var img1 = document.getElementById("img1");
+                img1.addEventListener("mouseover",function(){
+                    this.src = './static/real.jpg';
+                    style=" border: 1px solid black";
+                })
+                img1.addEventListener("mouseout",function(){
+                    this.src = 'static/real1.jpg';
+                })
+                var img2 = document.getElementById("img2");
+                img2.addEventListener("mouseover",function(){
+                    this.src = 'static/real.jpg';
+                })
+                img2.addEventListener("mouseout",function(){
+                    this.src = 'static/real2.jpg';
+                })
+                var img3 = document.getElementById("img3");
+                img3.addEventListener("mouseover",function(){
+                    this.src = 'static/real.jpg';
+                })
+                img3.addEventListener("mouseout",function(){
+                    this.src = 'static/real3.jpg';
+                })
+                var img4 = document.getElementById("img4");
+                img4.addEventListener("mouseover",function(){
+                    this.src = 'static/real.jpg';
+                })
+                img4.addEventListener("mouseout",function(){
+                    this.src = 'static/real4.jpg';
+                })
+                var img5 = document.getElementById("img5");
+                img5.addEventListener("mouseover",function(){
+                    this.src = 'static/fake.jpg';
+                })
+                img5.addEventListener("mouseout",function(){
+                    this.src = 'static/fake1.jpg';
+                })
+                var img6 = document.getElementById("img6");
+                img6.addEventListener("mouseover",function(){
+                    this.src = 'static/fake.jpg';
+                })
+                img6.addEventListener("mouseout",function(){
+                    this.src = 'static/fake2.jpg';
+                })
+                var img7 = document.getElementById("img7");
+                img7.addEventListener("mouseover",function(){
+                    this.src = 'static/fake.jpg';
+                })
+                img7.addEventListener("mouseout",function(){
+                    this.src = 'static/fake3.jpg';
+                })
+                var img8 = document.getElementById("img8");
+                img8.addEventListener("mouseover",function(){
+                    this.src = 'static/fake.jpg';
+                })
+                img8.addEventListener("mouseout",function(){
+                    this.src = 'static/fake4.jpg';
+                })
+
+                $("#progressbarTWInput").change(function(){
+                readURL(this);
+                });
+
+                function readURL(input){
+                if(input.files && input.files[0]){
+                    var imageTagID = input.getAttribute("targetID");
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                    var img = document.getElementById(imageTagID);
+                    img.setAttribute("src", e.target.result)
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+                }
+              
+         </script>
+  </body>
+</html>
